@@ -13,7 +13,6 @@ ENTITY hazard_detection_unit IS
 		in_IF_ID_op		  : IN STD_LOGIC_VECTOR (5 downto 0);
 		in_Data1_eq_Data2	  : IN STD_LOGIC;
 		
-
 		o_controlMux, o_IF_ID_write, o_PC_write    : OUT STD_LOGIC );
 END;
 
