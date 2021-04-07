@@ -19,6 +19,7 @@ ENTITY forward_unit IS
 		
 		in_EX_MEM_RegWrite        : IN STD_LOGIC;
 		in_MEM_WB_RegWrite        : IN STD_LOGIC;
+
 		in_ID_EX_MemWrite         : IN STD_LOGIC;
 
 		o_forwardA, o_forwardB    : OUT STD_LOGIC_VECTOR (1 downto 0);
@@ -36,7 +37,7 @@ ARCHITECTURE struct OF forward_unit IS
 BEGIN
 	--Signal Assignment
 	int_EX_MEM_rd_notZero <= in_EX_MEM_rd(0) OR in_EX_MEM_rd(1) OR in_EX_MEM_rd(2);
-	int_MEM_WB_rd_notZero <= in_MEM_WB_rd(0) OR in_MEM_WB_rd(1) OR in_MEM_WB_rd(2);
+	int_MEM_WB_rd_notZero <= in_MEM_WB_rd(0) OR in_MEM_WB_rd(1) OR in_MEM_WB_rd(2);	
 
 	int_EX_MEM_rd_eq_ID_EX_rs <= (in_EX_MEM_rd(0) XNOR in_ID_EX_rs(0)) AND (in_EX_MEM_rd(1) XNOR in_ID_EX_rs(1)) AND (in_EX_MEM_rd(2) XNOR in_ID_EX_rs(2));
 	int_EX_MEM_rd_eq_ID_EX_rt <= (in_EX_MEM_rd(0) XNOR in_ID_EX_rt(0)) AND (in_EX_MEM_rd(1) XNOR in_ID_EX_rt(1)) AND (in_EX_MEM_rd(2) XNOR in_ID_EX_rt(2));
@@ -55,9 +56,9 @@ BEGIN
 	
 	--Output Assignment
 	o_forwardA(0) <= int_rtype3 AND not(int_rtype1);
-	o_forwardA(1) <= int_rtype1;
+	o_forwardA(1) <= int_rtype1 AND not (int_swtype2);
 	o_forwardB(0) <= int_rtype4 AND not(int_rtype2);
-	o_forwardB(1) <= int_rtype2;
+	o_forwardB(1) <= int_rtype2 AND not(int_swtype1);
 
 	o_forwardC    <= int_swtype1;
 
