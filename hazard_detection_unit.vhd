@@ -11,7 +11,7 @@ ENTITY hazard_detection_unit IS
 		in_MEM_WB_RegWrite	  : IN STD_LOGIC;
 
                 in_ID_EX_rt		  		 : IN STD_LOGIC_VECTOR (2 downto 0);
-		in_IF_ID_rs, in_IF_ID_rt, in_IF_ID_rd    : IN STD_LOGIC_VECTOR (2 downto 0);
+		in_IF_ID_rs, in_IF_ID_rt    : IN STD_LOGIC_VECTOR (2 downto 0);
 		in_MEM_WB_WriteRegister		 	 : IN STD_LOGIC_VECTOR (2 downto 0);
 
 

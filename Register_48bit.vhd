@@ -1,27 +1,27 @@
 --------------------------------------------------------------------------------
--- Title         : 40-bit Active Low Reset Register
+-- Title         : 48-bit Active Low Reset Register
 -- Project       : Pipelined Single Cycle MIPS Processor
 -------------------------------------------------------------------------------
--- File          : Register_38bit.vhd
+-- File          : Register_48bit.vhd
 -- Author        : Jainil Gandhi  <jgand039@uottawa.ca>
 -- Created       : 2021/04/01
 -- Last modified : 2021/04/01
 -------------------------------------------------------------------------------
--- Description : This register is created to be later used as IF/ID buffer pipe
+-- Description : This register is created to be later used as ID/EX buffer pipe
 --		 for the top-level processor_8bit.vhd
 -------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
-ENTITY Register_40bit IS
+ENTITY Register_48bit IS
 	PORT (
-		Input : IN STD_LOGIC_VECTOR (39 downto 0);
+		Input : IN STD_LOGIC_VECTOR (47 downto 0);
 		Clk, Rst, En : IN STD_LOGIC;
-		Output : OUT STD_LOGIC_VECTOR (39 downto 0)
+		Output : OUT STD_LOGIC_VECTOR (47 downto 0)
 	);
 END;
 
-ARCHITECTURE struct OF Register_40bit IS
+ARCHITECTURE struct OF Register_48bit IS
 
 COMPONENT enARdFF_2 IS
 	PORT(
@@ -35,6 +35,78 @@ END COMPONENT;
 BEGIN
 
 	-- Component Instantiation --
+	FF47: enARdFF_2
+	PORT MAP (i_resetBar => Rst,
+		  i_d => Input(47),
+		  i_enable => En,
+		  i_clock => Clk,
+		  o_q => Output(47),
+		  o_qBar => OPEN
+	);
+	
+	FF46: enARdFF_2
+	PORT MAP (i_resetBar => Rst,
+		  i_d => Input(46),
+		  i_enable => En,
+		  i_clock => Clk,
+		  o_q => Output(46),
+		  o_qBar => OPEN
+	);
+	
+	FF45: enARdFF_2
+	PORT MAP (i_resetBar => Rst,
+		  i_d => Input(45),
+		  i_enable => En,
+		  i_clock => Clk,
+		  o_q => Output(45),
+		  o_qBar => OPEN
+	);
+	
+	FF44: enARdFF_2
+	PORT MAP (i_resetBar => Rst,
+		  i_d => Input(44),
+		  i_enable => En,
+		  i_clock => Clk,
+		  o_q => Output(44),
+		  o_qBar => OPEN
+	);
+	
+	FF43: enARdFF_2
+	PORT MAP (i_resetBar => Rst,
+		  i_d => Input(43),
+		  i_enable => En,
+		  i_clock => Clk,
+		  o_q => Output(43),
+		  o_qBar => OPEN
+	);
+	
+	FF42: enARdFF_2
+	PORT MAP (i_resetBar => Rst,
+		  i_d => Input(42),
+		  i_enable => En,
+		  i_clock => Clk,
+		  o_q => Output(42),
+		  o_qBar => OPEN
+	);
+	
+	FF41: enARdFF_2
+	PORT MAP (i_resetBar => Rst,
+		  i_d => Input(41),
+		  i_enable => En,
+		  i_clock => Clk,
+		  o_q => Output(41),
+		  o_qBar => OPEN
+	);
+	
+	FF40: enARdFF_2
+	PORT MAP (i_resetBar => Rst,
+		  i_d => Input(40),
+		  i_enable => En,
+		  i_clock => Clk,
+		  o_q => Output(40),
+		  o_qBar => OPEN
+	);
+	
 	FF39: enARdFF_2
 	PORT MAP (i_resetBar => Rst,
 		  i_d => Input(39),

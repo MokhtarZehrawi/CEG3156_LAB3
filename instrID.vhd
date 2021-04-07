@@ -22,15 +22,14 @@ ENTITY instrID IS
 			writeAddr : IN STD_LOGIC_VECTOR (2 downto 0);
 			writeReg, ctrlMUX, Clk, Rst : IN STD_LOGIC;
 			Data1, Data2, targetAddr, controlSig : OUT STD_LOGIC_VECTOR (7 downto 0);
-			Rd : OUT STD_LOGIC_VECTOR (5 downto 0);
-			Rs, highRt, lowRt: OUT STD_LOGIC_VECTOR (2 downto 0);
-			pcSrc : OUT STD_LOGIC
+			instructOut : OUT STD_LOGIC_VECTOR (31 downto 0);
+			pcSrc, ifFlush, Equal, Branch, Jump : OUT STD_LOGIC
 	);
 END;
 
 ARCHITECTURE struct OF instrID IS
 
-SIGNAL int_Data1, int_Data2 : STD_LOGIC_VECTOR (7 downto 0);
+SIGNAL int_Data1, int_Data2, int_targetAddr : STD_LOGIC_VECTOR (7 downto 0);
 SIGNAL int_aluOP : STD_LOGIC_VECTOR (1 downto 0);
 SIGNAL int_Equal, int_RegDst, int_Jump, int_Branch, int_MemRead, int_MemtoReg, int_MemWrite, int_ALUsrc, int_RegWrite : STD_LOGIC;
 
@@ -103,7 +102,7 @@ BEGIN
 				 B(7) => instruct(15),
 				 B(6 downto 0) => instruct(6 downto 0),
 				 Cin => '0',
-				 Sum => targetAddr,
+				 Sum => int_targetAddr,
 				 Cout => OPEN,
 				 Ovr => OPEN
 	);
@@ -121,7 +120,14 @@ BEGIN
 				 o_aluOP => int_aluOP
 	);
 	
-	MUX: MUX_2x1_8bit
+	MUX0: MUX_2x1_8bit
+	PORT MAP (input0 => int_targetAddr,
+				 input1 => instruct(7 downto 0),
+				 SEL => int_Jump,
+				 output => targetAddr
+	);
+	
+	MUX1: MUX_2x1_8bit
 	PORT MAP (input0(7) => int_RegWrite,
 				 input0(6) => int_MemtoReg,
 				 input0(5) => int_MemRead, 
@@ -135,10 +141,13 @@ BEGIN
 	);
 	
 	-- Output Equations --
-	Rs <= instruct(23 downto 21);
-	highRt <= instruct(18 downto 16);
-	lowRt <= instruct(13 downto 11);
-	Rd <= instruct(5 downto 0);
+	Data1 <= int_Data1;
+	Data2 <= int_Data2;
+	instructOut <= instruct;
 	pcSrc <= int_Jump OR (int_Branch AND int_Equal);
+	ifFlush <= int_Jump OR (int_Branch AND int_Equal);
+	Equal <= int_Equal;
+	Branch <= int_Branch;
+	Jump <= int_Jump;
 	
 END struct;

@@ -1,27 +1,27 @@
---------------------------------------------------------------------------------
--- Title         : 40-bit Active Low Reset Register
+-------------------------------------------------------------------------------
+-- Title         : 23-bit Active Low Reset Register
 -- Project       : Pipelined Single Cycle MIPS Processor
 -------------------------------------------------------------------------------
--- File          : Register_38bit.vhd
+-- File          : Register_23bit.vhd
 -- Author        : Jainil Gandhi  <jgand039@uottawa.ca>
--- Created       : 2021/04/01
--- Last modified : 2021/04/01
+-- Created       : 2021/04/06
+-- Last modified : 2021/04/06
 -------------------------------------------------------------------------------
--- Description : This register is created to be later used as IF/ID buffer pipe
+-- Description : This register is created to be later used as EX/MEM buffer pipe
 --		 for the top-level processor_8bit.vhd
 -------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
-ENTITY Register_40bit IS
+ENTITY Register_23bit IS
 	PORT (
-		Input : IN STD_LOGIC_VECTOR (39 downto 0);
+		Input : IN STD_LOGIC_VECTOR (22 downto 0);
 		Clk, Rst, En : IN STD_LOGIC;
-		Output : OUT STD_LOGIC_VECTOR (39 downto 0)
+		Output : OUT STD_LOGIC_VECTOR (22 downto 0)
 	);
 END;
 
-ARCHITECTURE struct OF Register_40bit IS
+ARCHITECTURE struct OF Register_23bit IS
 
 COMPONENT enARdFF_2 IS
 	PORT(
@@ -35,159 +35,6 @@ END COMPONENT;
 BEGIN
 
 	-- Component Instantiation --
-	FF39: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(39),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(39),
-		  o_qBar => OPEN
-	);
-	
-	FF38: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(38),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(38),
-		  o_qBar => OPEN
-	);
-	
-	FF37: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(37),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(37),
-		  o_qBar => OPEN
-	);
-
-	FF36: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(36),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(36),
-		  o_qBar => OPEN
-	);
-
-	FF35: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(35),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(35),
-		  o_qBar => OPEN
-	);
-
-	FF34: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(34),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(34),
-		  o_qBar => OPEN
-	);
-
-	FF33: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(33),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(33),
-		  o_qBar => OPEN
-	);
-
-	FF32: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(32),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(32),
-		  o_qBar => OPEN
-	);
-
-	FF31: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(31),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(31),
-		  o_qBar => OPEN
-	);
-
-	FF30: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(30),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(30),
-		  o_qBar => OPEN
-	);
-
-	FF29: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(29),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(29),
-		  o_qBar => OPEN
-	);
-
-	FF28: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(28),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(28),
-		  o_qBar => OPEN
-	);
-
-	FF27: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(27),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(27),
-		  o_qBar => OPEN
-	);
-
-	FF26: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(26),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(26),
-		  o_qBar => OPEN
-	);
-
-	FF25: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(25),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(25),
-		  o_qBar => OPEN
-	);
-
-	FF24: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(24),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(24),
-		  o_qBar => OPEN
-	);
-	
-	FF23: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(23),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(23),
-		  o_qBar => OPEN
-	);
-
 	FF22: enARdFF_2
 	PORT MAP (i_resetBar => Rst,
 		  i_d => Input(22),
@@ -196,7 +43,7 @@ BEGIN
 		  o_q => Output(22),
 		  o_qBar => OPEN
 	);
-
+	
 	FF21: enARdFF_2
 	PORT MAP (i_resetBar => Rst,
 		  i_d => Input(21),
@@ -205,7 +52,7 @@ BEGIN
 		  o_q => Output(21),
 		  o_qBar => OPEN
 	);
-
+	
 	FF20: enARdFF_2
 	PORT MAP (i_resetBar => Rst,
 		  i_d => Input(20),
@@ -214,7 +61,7 @@ BEGIN
 		  o_q => Output(20),
 		  o_qBar => OPEN
 	);
-	
+
 	FF19: enARdFF_2
 	PORT MAP (i_resetBar => Rst,
 		  i_d => Input(19),
@@ -396,4 +243,3 @@ BEGIN
 	);
 
 END struct;
-		

@@ -18,12 +18,12 @@ USE ieee.std_logic_1164.ALL;
 
 ENTITY instrALU IS
 	PORT (
-		Data1, Data2, prevResult, loadData : IN STD_LOGIC_VECTOR (7 downto 0);
+		Data1, Data2, prevResult, loadData, Addr : IN STD_LOGIC_VECTOR (7 downto 0);
 		Func : IN STD_LOGIC_VECTOR (5 downto 0);
 		Rt, Rd : IN STD_LOGIC_VECTOR (2 downto 0);
 		ALUOp, forwardA, forwardB : IN STD_LOGIC_VECTOR (1 downto 0);
-		RegDst : IN STD_LOGIC;
-		Result : OUT STD_LOGIC_VECTOR (7 downto 0);
+		RegDst, ALUSrc, forwardC : IN STD_LOGIC;
+		Result, dataRAM : OUT STD_LOGIC_VECTOR (7 downto 0);
 		RegAddr : OUT STD_LOGIC_VECTOR (2 downto 0);
 		Zero, Ovr : OUT STD_LOGIC
 	);
@@ -31,7 +31,7 @@ END;
 
 ARCHITECTURE struct OF instrALU IS
 
-SIGNAL int_A, int_B, int_RegAddr : STD_LOGIC_VECTOR (7 downto 0);
+SIGNAL int_A, int_B, int_RegAddr, int_aluMUX : STD_LOGIC_VECTOR (7 downto 0);
 SIGNAL int_Op : STD_LOGIC_VECTOR (2 downto 0);
 
 COMPONENT unitALU_8bit IS
@@ -70,6 +70,20 @@ END COMPONENT;
 BEGIN
 
 	-- Component Instantiation --
+	MUX_ALUSrc: MUX_2x1_8bit
+	PORT MAP (input0 => Data2,
+				 input1 => Addr,
+				 SEL => ALUSrc,
+				 output => int_aluMUX
+	);
+	
+	MUX_SW: MUX_2x1_8bit
+	PORT MAP (input0 => Data2,
+				 input1 => prevResult,
+				 SEL => forwardC,
+				 output => dataRAM
+	);
+	
 	MUX_RegAddr: MUX_2x1_8bit
 	PORT MAP (input0(7 downto 3) => "00000",
 				 input0(2 downto 0) => Rt,
@@ -88,7 +102,7 @@ BEGIN
 	);
 	
 	MUX_B: MUX_3x1_8bit
-	PORT MAP (input0 => Data2,
+	PORT MAP (input0 => int_aluMUX,
 				 input1 => loadData,
 				 input2 => prevResult,
 				 sel => forwardB,

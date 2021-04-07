@@ -75,8 +75,8 @@ BEGIN
 	
 	-- Component Instantiation --
 	MUX: MUX_2x1_8bit
-	PORT MAP (input0 => targetAddr,
-				 input1 => int_incrAddr,
+	PORT MAP (input0 => int_incrAddr,
+				 input1 => targetAddr,
 				 SEL => pcSrc,
 				 output => int_nextAddr
 	);

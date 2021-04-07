@@ -1,8 +1,8 @@
 --------------------------------------------------------------------------------
--- Title         : 39-bit Active Low Reset Register
+-- Title         : 38-bit Active Low Reset Register
 -- Project       : Pipelined Single Cycle MIPS Processor
 -------------------------------------------------------------------------------
--- File          : Register_39bit.vhd
+-- File          : Register_38bit.vhd
 -- Author        : Jainil Gandhi  <jgand039@uottawa.ca>
 -- Created       : 2021/04/01
 -- Last modified : 2021/04/01
@@ -13,15 +13,15 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
-ENTITY Register_39bit IS
+ENTITY Register_38bit IS
 	PORT (
-		Input : IN STD_LOGIC_VECTOR (38 downto 0);
+		Input : IN STD_LOGIC_VECTOR (37 downto 0);
 		Clk, Rst, En : IN STD_LOGIC;
-		Output : OUT STD_LOGIC_VECTOR (38 downto 0)
+		Output : OUT STD_LOGIC_VECTOR (37 downto 0)
 	);
 END;
 
-ARCHITECTURE struct OF Register_39bit IS
+ARCHITECTURE struct OF Register_38bit IS
 
 COMPONENT enARdFF_2 IS
 	PORT(
@@ -35,15 +35,6 @@ END COMPONENT;
 BEGIN
 
 	-- Component Instantiation --
-	FF38: enARdFF_2
-	PORT MAP (i_resetBar => Rst,
-		  i_d => Input(38),
-		  i_enable => En,
-		  i_clock => Clk,
-		  o_q => Output(38),
-		  o_qBar => OPEN
-	);
-	
 	FF37: enARdFF_2
 	PORT MAP (i_resetBar => Rst,
 		  i_d => Input(37),
